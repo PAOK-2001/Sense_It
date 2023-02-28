@@ -1,0 +1,3 @@
+/home/paok/Documents/Sense_It/build/pioasm/CMakeFiles/pioasm.dir
+/home/paok/Documents/Sense_It/build/pioasm/CMakeFiles/edit_cache.dir
+/home/paok/Documents/Sense_It/build/pioasm/CMakeFiles/rebuild_cache.dir
