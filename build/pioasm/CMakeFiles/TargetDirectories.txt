@@ -1,3 +1,0 @@
-/home/paok/Documents/Pico-Testing/build/pioasm/CMakeFiles/pioasm.dir
-/home/paok/Documents/Pico-Testing/build/pioasm/CMakeFiles/edit_cache.dir
-/home/paok/Documents/Pico-Testing/build/pioasm/CMakeFiles/rebuild_cache.dir
