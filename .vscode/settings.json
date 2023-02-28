@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "pulsepwm.h": "c",
+        "readfromadc.h": "c"
+    },
+    "cSpell.words": [
+        "clkdiv",
+        "READFROMADC"
+    ]
+}
