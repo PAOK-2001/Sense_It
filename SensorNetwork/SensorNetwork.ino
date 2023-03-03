@@ -10,6 +10,12 @@
 #include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_ADXL345_U.h>
+#include <Adafruit_GPS.h>
+
+#define GPSSerial Serial2
+#define GPSECHO false
+
+Adafruit_GPS GPS(&GPSSerial);
 
 #define IR 15
 #define FOTO_RESISTOR A0
@@ -50,8 +56,9 @@ int is_presence(){
   return !digitalRead(IR);
 }
 
+
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(IR, INPUT);
   pinMode(FOTO_RESISTOR, INPUT);
   rtc.begin();
@@ -61,14 +68,30 @@ void setup() {
   }
   // Chose sensor lib
   accelerometer.setRange(ADXL345_RANGE_16_G);
+  GPS.begin(9600);
+  GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCONLY);
+  GPS.sendCommand(PMTK_SET_NMEA_UPDATE_1HZ); // 1 Hz update rate
+  GPS.sendCommand(PGCMD_ANTENNA);
+  delay(1000);
+  GPSSerial.println(PMTK_Q_RELEASE);
   // Optional setup to set an initial time
   //rtc.DSadjust(22, 40, 0, 2023, 3, 2); // 00:15:21 16 Mar 2022
  
 }
 
 void loop() {
-  if(millis() - lastTime >= 1000) {
+  char c = GPS.read();
+  if (GPS.newNMEAreceived()) {
+    if (!GPS.parse(GPS.lastNMEA())) return; 
+   }
+  if(millis() - lastTime >= 2000) {
     rtc.DSread(); 
+    if (GPS.fix) {
+      Serial.print("Location: ");
+      Serial.print(GPS.latitudeDegrees, 5);
+      Serial.print(", ");
+      Serial.println(GPS.longitudeDegrees, 5);
+    }
     read_time();
     read_accelerometer();
     Serial.println("Ṕhotoresistor: " + String(read_from_photores()));
