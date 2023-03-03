@@ -47,7 +47,7 @@ void loop() {
   if(millis() - lastTime >= 1000) {
     rtc.DSread(); 
     read_time();
-    Serial.println("Ṕhotoresistor: %d",read_from_photores());
+    Serial.println("Ṕhotoresistor: " + String(read_from_photores()));
     lastTime = millis();
    }
 
